@@ -1,29 +1,244 @@
 <!DOCTYPE html>
-<html>
+<html lang="sr">
 <head>
-    <title>TIGRES ELITE - BAZA</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐯 TIGRES ELITE - CYBERNETIC DASHBOARD 🐯</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body { background: #000; color: #00ff41; font-family: monospace; text-align: center; padding: 50px; }
-        .box { border: 2px solid #00ff41; padding: 20px; display: inline-block; box-shadow: 0 0 15px #00ff41; }
-        .btn { background: #00ff41; color: #000; padding: 15px; text-decoration: none; font-weight: bold; display: block; margin-top: 15px; border-radius: 5px; }
-        .btn:hover { background: #fff; }
-        hr { border: 1px solid #00ff41; }
+        :root {
+            --neon-green: #00ff41;
+            --neon-blue: #00d4ff;
+            --dark-bg: #050505;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: radial-gradient(circle at top, #111 0%, #000 100%);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        /* Naslovni deo - Prosvetljen */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+            padding-bottom: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            color: var(--neon-green);
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.7);
+            letter-spacing: 15px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            color: #fff;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        /* Mreža sa karticama */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
+            background: rgba(0, 255, 65, 0.03);
+        }
+
+        /* Velike Sličice (Ikone) */
+        .icon-box {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        }
+
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--neon-green);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            height: 60px;
+        }
+
+        /* Download Dugme - Krupno i svetli */
+        .download-btn {
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--neon-green);
+            padding: 20px 40px;
+            font-size: 1.3rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 10px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .download-btn:hover {
+            background: var(--neon-green);
+            color: #000;
+            box-shadow: 0 0 40px var(--neon-green);
+            transform: scale(1.1);
+        }
+
+        .download-here {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: var(--neon-green);
+            letter-spacing: 4px;
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+
+        /* Poseban stil za Tigres V7 (Premium) */
+        .premium {
+            border-color: var(--neon-blue);
+        }
+        .premium h3, .premium .icon-box {
+            color: var(--neon-blue);
+            text-shadow: 0 0 15px var(--neon-blue);
+        }
+        .premium .download-btn {
+            border-color: var(--neon-blue);
+        }
+        .premium .download-btn:hover {
+            background: var(--neon-blue);
+            box-shadow: 0 0 40px var(--neon-blue);
+        }
+        .premium .download-here { color: var(--neon-blue); }
+
+        /* Status Tačka */
+        .status-online {
+            display: inline-block;
+            width: 12px; height: 12px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px var(--neon-green);
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink { 0% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.2; } }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; letter-spacing: 5px; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>🐯 TIGRES ELITE 🐯</h1>
-        <p>[ STATUS: ONLINE ]</p>
-        <hr>
-        <p>IZABERI ALAT ZA DOWNLOAD:</p>
 
-        <a href="https://www.dropbox.com/scl/fi/66z2p8zqq09emft8vi859/bateryskener.exe?rlkey=7dxkr5ykb6fe5vtfowbfkes6w&dl=1" class="btn">🚀 BATTERY SKENER</a>
-        <a href="https://www.dropbox.com/scl/fi/4e7lgnfdw1h14m0yo56gi/hibrid_3.exe?rlkey=0nqo5chpbf6dczkhld7ln170b&dl=1" class="btn">⚡ HIBRID 3</a>
-        <a href="https://www.dropbox.com/scl/fi/ql55zk39hxobnodx7iony/SKENIRANJEHARD2.exe?rlkey=pko3n4qz0g547yy2llbbyclgx&dl=1" class="btn">🔍 SKENIRANJE HARD 2</a>
-        <a href="https://www.dropbox.com/scl/fi/pwui80wzgphx4eygcny24/tigresv7.exe?rlkey=d2wqyddxxohf7cin57jx0z9dk&dl=1" class="btn">🐯 TIGRES V7 PRO</a>
-        <a href="https://www.dropbox.com/scl/fi/i10c4msmcsxadakwoqr61/TURBO_downloader_fulHD.exe?rlkey=116f3mwhlqwxjdgzvxhdh0h8r&dl=1" class="btn">🎬 TURBO DOWNLOADER HD</a>
-        <a href="https://www.dropbox.com/scl/fi/owkysbxnimiup6iwn7hph/TURBOcopy.exe?rlkey=a50qnc5rhoomhngyj16zby3h0&dl=1" class="btn">📂 TURBO COPY</a>
+    <header>
+        <h1>TIGRES ELITE</h1>
+        <div class="subtitle">CYBERNETIC DASHBOARD</div>
+        <div style="margin-top: 20px;">
+            <span class="status-online"></span> SERVER STATUS: ENCRYPTED
+        </div>
+    </header>
+
+    <div class="dashboard-grid">
+        
+        <div class="card">
+            <span class="icon-box">🔋</span>
+            <h3>BATTERY</h3>
+            <p>Skenira fabrički serijski broj i duboko zdravlje ćelija vašeg laptopa.</p>
+            <a href="https://www.dropbox.com/scl/fi/66z2p8zqq09emft8vi859/bateryskener.exe?rlkey=7dxkr5ykb6fe5vtfowbfkes6w&dl=1" class="download-btn">DOWNLOAD</a>
+            <span class="download-here">↓ download here ↓</span>
+        </div>
+
+        <div class="card">
+            <span class="icon-box">♻️</span>
+            <h3>HIBRID 3</h3>
+            <p>Vraća trajno obrisane fajlove sa vaših USB memorija i eksternih diskova.</p>
+            <a href="https://www.dropbox.com/scl/fi/4e7lgnfdw1h14m0yo56gi/hibrid_3.exe?rlkey=0nqo5chpbf6dczkhld7ln170b&dl=1" class="download-btn">DOWNLOAD</a>
+            <span class="download-here">↓ download here ↓</span>
+        </div>
+
+        <div class="card">
+            <span class="icon-box">🖥️</span>
+            <h3>HARD 2</h3>
+            <p>Kompletan inventar i skener svih hardverskih komponenti sistema.</p>
+            <a href="https://www.dropbox.com/scl/fi/ql55zk39hxobnodx7iony/SKENIRANJEHARD2.exe?rlkey=pko3n4qz0g547yy2llbbyclgx&dl=1" class="download-btn">DOWNLOAD</a>
+            <span class="download-here">↓ download here ↓</span>
+        </div>
+
+        <div class="card premium">
+            <span class="icon-box">🐯</span>
+            <h3>TIGRES V7</h3>
+            <p>Ekskluzivni Master Komandni Centar za administraciju i kontrolu.</p>
+            <a href="https://www.dropbox.com/scl/fi/pwui80wzgphx4eygcny24/tigresv7.exe?rlkey=d2wqyddxxohf7cin57jx0z9dk&dl=1" class="download-btn">DOWNLOAD</a>
+            <span class="download-here">↓ download here ↓</span>
+        </div>
+
+        <div class="card">
+            <span class="icon-box">🎬</span>
+            <h3>TURBO DL</h3>
+            <p>Skidanje video sadržaja sa YouTube-a u maksimalnoj HD rezoluciji.</p>
+            <a href="https://www.dropbox.com/scl/fi/i10c4msmcsxadakwoqr61/TURBO_downloader_fulHD.exe?rlkey=116f3mwhlqwxjdgzvxhdh0h8r&dl=1" class="download-btn">DOWNLOAD</a>
+            <span class="download-here">↓ download here ↓</span>
+        </div>
+
+        <div class="card">
+            <span class="icon-box">📂</span>
+            <h3>TURBO COPY</h3>
+            <p>Ultra-brzo kopiranje fajlova sa maksimalnom optimizacijom protoka podataka.</p>
+            <a href="https://www.dropbox.com/scl/fi/owkysbxnimiup6iwn7hph/TURBOcopy.exe?rlkey=a50qnc5rhoomhngyj16zby3h0&dl=1" class="download-btn">DOWNLOAD</a>
+            <span class="download-here">↓ download here ↓</span>
+        </div>
 
     </div>
+
+    <footer style="margin-top: 100px; opacity: 0.4; font-size: 0.8rem; letter-spacing: 2px;">
+        © 2026 TIGRES ELITE - PREMIERE HACKER INTERFACE
+    </footer>
+
 </body>
 </html>
