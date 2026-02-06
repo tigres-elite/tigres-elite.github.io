@@ -1,2 +1,2 @@
-# tigrs-elite.github.io
+# tigres-elite.github.io
 Zvanicna baza tigres elite
